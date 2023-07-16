@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTcpSocket>
 #include <QDebug>
+#include <QTimerEvent>
 
 namespace Ui {
 class MainWindow;
@@ -14,25 +15,34 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
 public:
-  explicit MainWindow(QWidget *parent = 0);
-  ~MainWindow();
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
   
-  void tcpConnect();
+    void tcpConnect();
+
 public slots:
-  void putData();
+    void putData();
+    void timerEvent(QTimerEvent *event);
+    void startTemp();
+    void stopTemp();
+
 private slots:
     void on_connect_clicked();
+
     void on_disconnect_clicked();
 
-    void on_horizontalSlider_3_actionTriggered(int action);
+    void on_start_clicked();
 
-    void on_horizontalSlider_3_valueChanged(int value);
+    void on_min_valueChanged(int value);
 
-    void on_timer_2_valueChanged(int value);
+    void on_max_valueChanged(int value);
+
+    void on_time_valueChanged(int value);
 
 private:
-  Ui::MainWindow *ui;
-  QTcpSocket *socket;
+    Ui::MainWindow *ui;
+    QTcpSocket *socket;
+    int timer;
 };
 
-#endif // MAINWINDOW_H
+#endif
