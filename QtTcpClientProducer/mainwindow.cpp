@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::tcpConnect(){
     socket->connectToHost(ui->lineEdit->text(), 1234);
     if(socket->waitForConnected(3000)){
-        qDebug() << "Connected";
+        qDebug() << "CONECTADO";
         ui->onoff->setText("CONECTADO");
         status=1;
     }
@@ -38,7 +38,7 @@ void MainWindow::putData(){
 
     int minimo = ui->display_min->value();
     int maximo = ui->display_max->value();
-    if(socket->state()== QAbstractSocket::ConnectedState){
+    if(socket->state()==QAbstractSocket::ConnectedState){
 
         msecdate = QDateTime::currentDateTime().toMSecsSinceEpoch();
         str = "set "+ QString::number(msecdate) + " " + QString::number(minimo+(rand()%(maximo-minimo)))+"\r\n";
@@ -71,8 +71,8 @@ void MainWindow::timerEvent(QTimerEvent *event){
 }
 
 void MainWindow::startTemp(){
-    int time = 1000*ui->min->value();
-    timer = startTimer(time);
+    int tempo = 1000*ui->time->value();
+    timer = startTimer(tempo);
     if (status==1){
         ui->startstop->setText("ATIVADO");
     }
@@ -87,18 +87,23 @@ void MainWindow::stopTemp(){
 }
 
 void MainWindow::on_min_valueChanged(int value){
-    ui->display_time->display(value);
-}
-
-void MainWindow::on_max_valueChanged(int value){
     ui->display_min->display(value);
 }
 
-void MainWindow::on_time_valueChanged(int value){
+void MainWindow::on_max_valueChanged(int value){
     ui->display_max->display(value);
+}
+
+void MainWindow::on_time_valueChanged(int value){
+    ui->display_time->display(value);
 }
 
 MainWindow::~MainWindow(){
     delete socket;
     delete ui;
 }
+
+void MainWindow::on_LIMPAR_clicked(){
+    ui->textBrowser->clear();
+}
+

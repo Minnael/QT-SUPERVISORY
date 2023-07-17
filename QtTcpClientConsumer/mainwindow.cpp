@@ -2,28 +2,22 @@
 #include "ui_mainwindow.h"
 #include <QDateTime>
 
-MainWindow::MainWindow(QWidget *parent) :
-  QMainWindow(parent),
-  ui(new Ui::MainWindow)
-{
-  ui->setupUi(this);
-  socket = new QTcpSocket(this);
-  tcpConnect();
+MainWindow::MainWindow(QWidget *parent):
+    QMainWindow(parent), ui(new Ui::MainWindow){
+    ui->setupUi(this);
+    socket = new QTcpSocket(this);
 
-  connect(ui->pushButtonGet,
-          SIGNAL(clicked(bool)),
-          this,
-          SLOT(getData()));
+    connect(ui->pushButtonGet, SIGNAL(clicked(bool)), this, SLOT(getData()));
 }
 
 void MainWindow::tcpConnect(){
-  socket->connectToHost("127.0.0.1",1234);
-  if(socket->waitForConnected(3000)){
-    qDebug() << "Connected";
-  }
-  else{
-    qDebug() << "Disconnected";
-  }
+    socket->connectToHost(ui->ipEdit->text(), 1234);
+    if(socket->waitForConnected(3000)){
+        qDebug() << "CONECTADO";
+    }
+    else{
+        qDebug() << "DISCONECTADO";
+    }
 }
 
 void MainWindow::getData(){
@@ -52,6 +46,16 @@ void MainWindow::getData(){
       }
     }
   }
+}
+
+
+void MainWindow::on_connect_clicked(){
+    tcpConnect();
+}
+
+void MainWindow::on_disconnect_clicked(){
+    socket -> disconnectFromHost();
+    qDebug() << "DESCONECTADO";
 }
 
 

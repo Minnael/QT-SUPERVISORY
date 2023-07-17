@@ -31,13 +31,15 @@ private slots:
 
     void on_disconnect_clicked();
 
-    void on_start_clicked();
+    //void on_start_clicked();
 
     void on_min_valueChanged(int value);
 
     void on_max_valueChanged(int value);
 
     void on_time_valueChanged(int value);
+
+    void on_LIMPAR_clicked();
 
 private:
     Ui::MainWindow *ui;
