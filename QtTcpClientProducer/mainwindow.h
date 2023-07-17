@@ -43,6 +43,7 @@ private:
     Ui::MainWindow *ui;
     QTcpSocket *socket;
     int timer;
+    int status;
 };
 
 #endif
